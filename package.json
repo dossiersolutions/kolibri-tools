@@ -1,0 +1,13 @@
+{
+  "name": "kolibri-update-dependencies",
+  "version": "1.0.0",
+  "description": "Fills in the dependencies of package.json given Kolibri subproject dependencies",
+  "scripts": {
+  },
+  "main": "index.js",
+  "bin": {
+    "kolibri-update-dependencies": "index.js"
+  },
+  "author": "Dossier Solutions AS",
+  "license": "ISC"
+}
