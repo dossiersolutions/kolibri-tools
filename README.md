@@ -1,7 +1,5 @@
 # kolibri-update-dependencies
 
-This repository contains the `kolibri-update-dependencies` script, which automatically fills in `package.json` based on local `dependencies.local.js` files, which in turn may require modules, automatically including their dependencies as well.
-
 ### The problem
 
 - We want to split the Kolibri JavaScript codebase beween several folders within `ProFile/trunk` (called modules) in order to be able to share code between different frontend projects.
@@ -26,3 +24,9 @@ module.exports = {
   }
 };
 ```
+
+### HOWTO
+
+This repository contains the `kolibri-update-dependencies` script, which automatically fills in `package.json` based on local `dependencies.local.js` files, which in turn may require modules, automatically including their dependencies as well.
+
+Just install it and run `kolibri-update-dependencies`.
