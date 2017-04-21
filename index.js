@@ -21,22 +21,27 @@ function validateFileExists(path, message) {
   }
 }
 
-function resolveDeps(subprojectPath, resolvedDeps, importOrigins) {
-  const localDepConfPath = "./" +  path.join(subprojectPath, "dependencies.local.js");
+function resolveDeps(subprojectPath, resolvedDeps, importOrigins, importedSubprojects) {
+  const localDepConfPath = path.resolve(path.join(subprojectPath, "dependencies.local.js"));
   validateFileExists(localDepConfPath, "Dependency file missing.");
+
+  if (importedSubprojects[subprojectPath]) {
+    return;
+  }
+  importedSubprojects[subprojectPath] = true;
 
   const localDepConf = require(localDepConfPath);
 
   ["subprojectDependencies", "npmDependencies"].forEach((key) => {
-    if (!localDepConf[key]) {
-      fatalError("Key missing from dependencies.local.js: " + key);
+    if (localDepConf[key] == undefined) {
+      fatalError("Key missing from " + localDepConfPath + ": " + key);
     }
   });
 
   const subprojectDependencies = localDepConf.subprojectDependencies;
   const npmDependencies        = localDepConf.npmDependencies;
 
-  subprojectDependencies.forEach((path) => resolveDeps(path, resolvedDeps, importOrigins));
+  subprojectDependencies.forEach((path) => resolveDeps(path, resolvedDeps, importOrigins, importedSubprojects));
 
   Object.keys(npmDependencies).forEach((name) => {
     if (resolvedDeps[name]) {
@@ -51,13 +56,14 @@ function resolveDeps(subprojectPath, resolvedDeps, importOrigins) {
     importOrigins[name] = subprojectPath;
   });
 
+
   return resolvedDeps;
 }
 
 validateFileExists("package.json", "Working directory is not an npm package.");
-const oldPackageJson = JSON.parse(fs.readFileSync("package.json"), "utf-8");
+const oldPackageJson = JSON.parse(fs.readFileSync(path.resolve("package.json")), "utf-8");
 
-const resolvedDeps = resolveDeps(".", {}, {});
+const resolvedDeps = resolveDeps(".", {}, {}, {});
 
 if (oldPackageJson.devDependencies) {
   oldPackageJson.devDependencies.forEach(() =>
@@ -96,4 +102,4 @@ const newPackageJson = Object.assign(
   }
 );
 
-fs.writeFileSync("package.json", JSON.stringify(newPackageJson, null, 2));
+fs.writeFileSync(path.resolve("package.json"), JSON.stringify(newPackageJson, null, 2));
