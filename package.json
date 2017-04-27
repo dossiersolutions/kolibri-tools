@@ -1,7 +1,7 @@
 {
   "name": "kolibri-update-dependencies",
   "version": "1.0.1",
-  "description": "Fills in the dependencies of package.json given Kolibri subproject dependencies",
+  "description": "Kolibri framework maintenance scripts",
   "scripts": {
   },
   "files": [

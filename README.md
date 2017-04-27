@@ -4,10 +4,6 @@ Contains various scripts for maintaining the Kolibri framework. Installing this 
 
 Each of the scripts should be ducumented below:
 
-## kolibri-lint
-
-Standard kolibri linter. Uses jslint along with some settings to do Kolibri-specific code linting.
-
 ## kolibri-update-dependencies
 
 #### Problem
