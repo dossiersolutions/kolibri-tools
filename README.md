@@ -1,6 +1,16 @@
-# kolibri-update-dependencies
+# Kolibri tools
 
-### The problem
+Contains various scripts for maintaining the Kolibri framework. Installing this repository via npm makes the contained scripts available as command line binaries.
+
+Each of the scripts should be ducumented below:
+
+## kolibri-lint
+
+Standard kolibri linter. Uses jslint along with some settings to do Kolibri-specific code linting.
+
+## kolibri-update-dependencies
+
+#### Problem
 
 - We want to split the Kolibri JavaScript codebase beween several folders within `ProFile/trunk` (called modules) in order to be able to share code between different frontend projects.
 - We want to be able to use a single webpack-dev-server to hot reload code from several modules
@@ -8,7 +18,7 @@
 
 `package.json` does not support requiring local folders as packages without copying them to `node_modules` or using the `link` feature. In other words there is no easy way to share dependencies between the kolibri modules, without invoking npm packaging and versioning.
 
-### The solution
+#### Solution
 
 Although it is a bit hacky, we can use a script to automatically fill in packages into `package.json` based on a separate `dependencies.local.js` file at the root of each module. This file can contain npm dependencies as well as a list of local module dependencies, whose own `dependencies.local.js` will be consulted.
 
@@ -25,8 +35,4 @@ module.exports = {
 };
 ```
 
-### HOWTO
-
-This repository contains the `kolibri-update-dependencies` script, which automatically fills in `package.json` based on local `dependencies.local.js` files, which in turn may require modules, automatically including their dependencies as well.
-
-Just install it and run `kolibri-update-dependencies`.
+`kolibri-update-dependencies`, automatically fills in `package.json` based on local `dependencies.local.js` files, which in turn may require modules, automatically including their dependencies as well.
