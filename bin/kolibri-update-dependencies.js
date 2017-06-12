@@ -1,4 +1,7 @@
 #!/usr/bin/env node
+
+// NOTE(jbe): This code is no longer being used
+
 const fs   = require("fs");
 const path = require("path");
 
